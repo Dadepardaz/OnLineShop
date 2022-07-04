@@ -1,0 +1,188 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "AddProduct";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="form-group">
+            <label for="exampleInputPassword1">Title</label>
+            <input type="text" class="form-control" id="Title">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Brand</label>
+            <input type="text" class="form-control" id="Brand">
+        </div>
+        <div class="form-group">
+            <label>Category</label>
+            <select class="form-control" id="CategoryId" style="width: 100%;" asp-items="@ViewBag.Categories">
+            </select>
+        </div>
+        <!-- /.form-group -->
+
+        <div class="form-group">
+            <input type="checkbox" id="IsDisplayed">
+            <label for="IsDisplayed">IsDisplayed</label>
+
+        </div>
+        <!-- /.form-group -->
+        <div class="form-group">
+            <label for="exampleInputPassword1">Inventory</label>
+            <input type="number" class="form-control" id="Inventory">
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputPassword1">Price</label>
+            <input type="number" class="form-control" id="Price">
+        </div>
+        <div class="form-group">
+            <label>Choose Files </label>
+            <input type="file" multiple class="form-control" accept="image/*" id="Images">
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <textarea class="form-control" rows="3" placeholder="Enter ..." id="Discription"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputPassword1">DisplayName</label>
+            <input type="text" class="form-control" id="DisplayName" checked>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Value</label>
+            <input type="text" class="form-control" id="Value">
+        </div>
+
+        <div class="card-footer">
+            <a id="AddFeatures" class="btn btn-primary">AddFeatures</a>
+        </div>
+
+        <table id="tbl_Features" class="col-md-12 table table-bordered table-hover  table-condensed table-responsive">
+            
+        <thead>
+            <tr>
+                <th>
+                    DisplayName
+                </th>
+                <th>
+                    Value
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+         <tbody>
+
+         </tbody>
+        </table>
+        <div class="card-footer">
+            <a id="AddProduct" class="btn btn-primary">Submit</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <script src="~/Sweetalert2/sweetalert2.min.js"></script>
+
+    <script>
+        $("#AddFeatures").on("click", function () {
+
+            var displayName = $("#DisplayName").val();
+            var value = $("#Value").val();
+
+            if (displayName == null || value == null) {
+                swal.fire(
+                    'warning!',
+                    'enter the fileds',
+                    'warning'
+                );
+            }
+
+            else {
+                $("#tbl_Features").append('<tr> <td>' + displayName + ' </td>  <td> ' + value + ' </td> <td> <a class = "idFeatures btn btn-danger"> Delete </a> </td> </tr>');
+                $("#DisplayName").val('');
+                $("#Value").val('');
+            }
+        });
+
+        $("#tbl_Features").on("click", '.idFeatures ', function () {
+            $(this).closest('tr').remove();
+        });
+        $("#AddProduct").on("click", function () {
+            var data = new FormData();
+            data.append("Title", $("#Title").val());
+            data.append("Brand", $("#Brand").val());
+            data.append("CategoryId", $("#CategoryId").find('option:selected').val());
+            data.append("IsDisplayed", $("#IsDisplayed").attr("checked") ? false : true);
+            data.append("Inventory", $("#Inventory").val());
+            data.append("Price", $("#Price").val());
+            data.append("Discription", $("#Discription").val());
+
+            var productImages = document.getElementById("Images");
+            if (productImages.files.length > 0) {
+                for (var i = 0; i < productImages.files.length; i++) {
+                    data.append('Images-' + i, productImages.files[i]);
+                }
+            }
+
+            var featureProduct = $('#tbl_Features tr:gt(0)').map(function () {
+                return {
+                    DisplayName: $(this.cells[0]).text(),
+                    Value: $(this.cells[1]).text()
+                };
+
+            }).get();
+
+            $.each(featureProduct, function (i, val) {
+                data.append("FeatureProduct[" + i +"].DisplayName", val.DisplayName);
+                data.append("FeatureProduct[" + i + "].Value", val.Value);
+            });
+
+            var ajaxRequest = $.ajax({
+                type: "POST",
+                url: "AddProduct",
+                contentType: false,
+                processData: false,
+                data: data,
+                success: function (data) {
+
+                    if (data.isSuccess == true) {
+
+                        swal.fire(
+                            'success!',
+                            data.message,
+                            'success'
+                        ).then(function (isConfirm) {
+                            window.location.href = "/Admin/Products/";
+
+                        });
+                    }
+                    else {
+
+                        swal.fire(
+                            'warning!',
+                            data.message,
+                            'warning'
+                        );
+                    }
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                    alert(thrownError);
+                }
+
+            });
+            ajaxRequest.done(function (xhr, textStatus) {
+
+            });
+        });
+    </script>
+
+
+}

@@ -1,0 +1,52 @@
+﻿@using OnlineShop.Application.Services.Orders.Queries.GetOrderForUser
+@model List<ResultGetOrderDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table>
+    <thead>
+        <tr>
+            <td>Number Of Order</td>
+            <td>Numer of Pay</td>
+            <td>Order Status</td>
+            <td>Products in Order</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.PayId
+                </td>
+                <td>
+                    @item.OrderStatus
+                </td>
+                <td>
+                 <table>
+                     @foreach (var orderDetail in item.OrderDetails)
+                     {
+                     <tr>
+                         <td>
+                             @orderDetail.ProductName
+                         </td>
+                         <td>
+                             @orderDetail.Price
+                         </td>
+                         <td>
+                             @orderDetail.Count
+                         </td>
+                     </tr>
+                     }
+                 </table>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

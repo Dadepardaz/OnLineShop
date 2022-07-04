@@ -1,0 +1,36 @@
+﻿@using OnlineShop.Application.Services.Products.Queries.GetProductDetailForAdmin
+@model DetailProductForAdminDto
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card-body">
+    <span class="tag">@Model.Title</span>
+    <span class="tag">@Model.Brand</span>
+    <span class="tag">@Model.Category</span>
+    <span class="tag">@Model.Price</span>
+    <span class="tag">@Model.Inventory</span>
+    <span class="tag">@Model.IsDisplayed</span>
+    <p class="tag">@Model.Discription</p>
+    @foreach (var item in Model.FeatureProduct)
+    {
+        <span class="tag">@item.DisplayName</span>
+        <span class="tag">@item.Value</span>
+    }
+
+    <div class="col-8 col-sm-8 text-center">
+
+        @foreach (var item in Model.Images)
+        {
+            <figure class="col-xl-6 col-lg-4 col-sm-6 col-12">
+                <a target="_blank" href="~/@item.Src">
+                  
+                    <img class="img-fluid mb-3" src="~/@item.Src" />
+                </a>
+            </figure>
+        }
+
+
+    </div>
+</div>

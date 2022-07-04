@@ -1,0 +1,219 @@
+﻿@addTagHelper *, LazZiya.TagHelpers
+@using OnlineShop.Application.Services.Products.Queries.GetProductForAdmin
+@model PaginationGetProduc
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+
+                <a href="~/admin/products/addproduct" class="btn btn-block bg-gradient-success" style="width: 150px; height:50px"> Add Product</a>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+
+                            <th>Ttile</th>
+                            <th>Brand</th>
+                            <th>Price</th>
+                            <th>Inventory</th>
+                            <th>IsDisplayed</th>
+                            <th>Category</th>
+                            <th style="width: 120px"></th>
+                            <th style="width: 60px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Products)
+                        {
+                            <tr>
+                                <td>@item.Title</td>
+                                <td>@item.Brand</td>
+                                <td>@item.Price</td>
+                                <td>@item.Inventory</td>
+                                <td>@item.IsDisplayed</td>
+                                <td>@item.Category</td>
+                                <td>
+                                    <button onclick="ShowModalEditProduct('@item.Id' , '@item.Title')" type="button" class="btn btn-block bg-gradient-success">Edit</button>
+
+                                </td>
+                                <td>
+                                    <a href="~/admin/products/detail/@item.Id" class="btn btn-block bg-gradient-success">Details</a>
+
+                                    <button onclick="Delete('@item.Id')" type="button" class="btn btn-block bg-gradient-danger">Delete</button>
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer clearfix">
+                <paging total-records="Model.RowCount"
+                        page-no="Model.Page"
+                        page-size="Model.PageSize"
+                        show-prev-next="true"
+                        show-total-pages="false"
+                        show-total-records="false"
+                        show-page-size-nav="true"
+                        show-first-numbered-page="true"
+                        show-last-numbered-page="true"
+                        query-string-key-page-no="Page"
+                        query-string-key-page-size="PageSize"
+                        gap-size="2">
+                </paging>
+            </div>
+        </div>
+        <!-- /.card -->
+        <!-- /.card -->
+    </div>
+    <!-- /.col -->
+    <!-- /.col -->
+</div>
+
+@section Scripts{
+    <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <script src="~/Sweetalert2/sweetalert2.min.js"></script>
+    <script>
+        function Delete(productId) {
+            swal.fire({
+                title: 'Delete',
+                text: "Are you Sure",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#7cacbe',
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No'
+            }).then((result) => {
+
+                if (result.value) {
+                    var postData = {
+                        'productId': productId
+                    };
+                    $.ajax({
+                        contentType: 'application/x-www-form-urlencoded',
+                        dataType: 'Json',
+                        type: "POST",
+                        url: "Delete",
+                        data: postData,
+                        success: function (data) {
+                            if (data.isSuccess == true) {
+                                swal.fire(
+                                    'success',
+                                    data.message,
+                                    'success'
+                                ).then(function (isConfirm) {
+                                    location.reload();
+                                });
+                            }
+                            else {
+                                swal.fire(
+                                    'warning',
+                                    data.message,
+                                    'warning'
+                                )
+                            }
+                        },
+                        error: function (request, status, error) {
+                            swal.fire(
+                                'warning',
+                                request.responseText,
+                                'warning'
+                            );
+                        }
+
+                    });
+                }
+            });
+        }
+
+        function Editproduct() {
+
+            var productId = $("#edit_productId").val();
+            var title = $("#edit_title").val();
+            var postData = {
+                'productId': productId,
+                'title': title
+
+            };
+
+            $.ajax({
+                contentType: 'application/x-www-form-urlencoded',
+                dataType: 'json',
+                type: "POST",
+                url: "EditProduct",
+                data: postData,
+                success: function (data) {
+                    if (data.isSuccess == true) {
+                        swal.fire(
+                            'success!',
+                            data.message,
+                            'success'
+                        ).then(function (isConfirm) {
+                            location.reload();
+                        });
+                    }
+                    else {
+                        swal.fire(
+                            'warning!',
+                            data.message,
+                            'warning'
+                        );
+                    }
+                },
+                error: function (request, status, error) {
+                    alert(request.responseText);
+                }
+            });
+            $("#EditProduct").modal('hide');
+
+        }
+        function ShowModalEditProduct(productId, title) {
+            $("#edit_productId").val(productId);
+            $("#edit_title").val(title);
+            $("#EditProduct").modal('show');
+
+        }
+    </script>
+}
+
+
+
+@section Modals
+{
+    <!-- Modal Edit  -->
+    <div class="modal fade" id="EditProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle"> Edit Product</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-xl-12 col-lg-12 col-md-12 mb-1">
+                        <fieldset class="form-group">
+                            <input type="hidden" id="edit_productId" />
+                            <label for="basicInput">Title</label>
+                            <input type="text" class="form-control" id="edit_title">
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-secondary" data-dismiss="modal">Close</a>
+                    <a class="btn btn-primary" onclick="Editproduct()"> Apply</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,270 @@
+﻿@addTagHelper *, LazZiya.TagHelpers
+@using OnlineShop.Application.Services.Users.Queries.GetUserForAdmin
+@model ResultGetUser
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+
+                <a href="~/admin/users/adduser" class="btn btn-block bg-gradient-success" style="width: 150px; height:50px"> Add User</a>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>IsActive</th>
+                            <th>Roles</th>
+                            <th style="width: 120px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Users)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.Email</td>
+                                <td>@item.IsActive</td>
+                                @foreach (var role in item.Roles)
+                                {
+                                    <td>@role.Name</td>
+                                }
+
+
+                                <td>
+                                    <button class="btn btn-info" onclick="ShowModalEditUser('@item.Id', '@item.Name')">Edit</button>
+
+                                    <button onclick="ChangeStatus('@item.Id')" type="button" class="btn btn-block bg-gradient-primary">ChangeStatus</button>
+
+                                    <button onclick="Delete('@item.Id')" type="button" class="btn btn-block bg-gradient-danger">Delete</button>
+
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer clearfix">
+                <paging total-records="Model.RowCount"
+                        page-no="Model.Page"
+                        page-size="Model.PageSize"
+                        show-prev-next="true"
+                        show-total-pages="false"
+                        show-total-records="false"
+                        show-page-size-nav="true"
+                        show-first-numbered-page="true"
+                        show-last-numbered-page="true"
+                        query-string-key-page-no="Page"
+                        query-string-key-page-size="PageSize"
+                        gap-size="2">
+                </paging>
+            </div>
+        </div>
+        <!-- /.card -->
+        <!-- /.card -->
+    </div>
+    <!-- /.col -->
+    <!-- /.col -->
+</div>
+
+@section Scripts{
+
+    <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <script src="~/Sweetalert2/sweetalert2.min.js"></script>
+    <script>
+        function Delete(userId) {
+
+            swal.fire(
+                {
+                    title: 'Delete',
+                    text: "Are you Sure",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#7cacbe',
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No'
+                }).then((result) => {
+                    if (result.value) {
+                        var postData = {
+
+                            'userId': userId
+                        };
+                        $.ajax({
+                            contentType: 'application/x-www-form-urlencoded',
+                            dataType: 'json',
+                            type: "POST",
+                            url: "Delete",
+                            data: postData,
+                            success: function (data) {
+                                if (data.isSuccess == true) {
+                                    swal.fire(
+                                        'success',
+                                        data.message,
+                                        'success'
+                                    ).then(function (isConfirm) {
+                                        location.reload();
+                                    });
+                                }
+                                else {
+                                    swal.fire(
+                                        'warning',
+                                        data.message,
+                                        'warning'
+                                    );
+                                }
+                            },
+                            error: function (request, status, error) {
+                                swal.fire(
+                                    'warning',
+                                    request.responseText,
+                                    'warning'
+                                );
+                            }
+                        });
+                    }
+                });
+        }
+
+        function ChangeStatus(userId) {
+            swal.fire({
+                title: 'ChangeStatus',
+                text: "Are you Sure",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#7cacbe',
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No'
+            }).then((result) => {
+
+                if (result.value) {
+                    var postData = {
+                        'userId': userId
+                    };
+                    $.ajax({
+                        contentType: 'application/x-www-form-urlencoded',
+                        dataType: 'Json',
+                        type: "POST",
+                        url: "ChangeStatus",
+                        data: postData,
+                        success: function (data) {
+                            if (data.isSuccess == true) {
+                                swal.fire(
+                                    'success',
+                                    data.message,
+                                    'success'
+                                ).then(function (isConfirm) {
+                                    location.reload();
+                                });
+                            }
+                            else {
+                                swal.fire(
+                                    'warning',
+                                    data.message,
+                                    'warning'
+                                )
+                            }
+                        },
+                        error: function (request, status, error) {
+                            swal.fire(
+                                'warning',
+                                request.responseText,
+                                'warning'
+                            );
+                        }
+
+                    });
+                }
+            });
+        }
+
+        function Edituser() {
+            var userId = $('#Edit_UserId').val();
+            var name = $('#Edit_Name').val();
+
+            var postData = {
+                'userId': userId,
+                'name': name
+            };
+
+            $.ajax({
+                contentType: 'application/x-www-form-urlencoded',
+                dataType: 'json',
+                type: "POST",
+                url: "Edit",
+                data: postData,
+                success: function (data) {
+                    if (data.isSuccess == true) {
+                        swal.fire(
+                            'موفق!',
+                            data.message,
+                            'success'
+                        ).then(function (isConfirm) {
+                            location.reload();
+                        });
+                    }
+                    else {
+                        swal.fire(
+                            'هشدار!',
+                            data.message,
+                            'warning'
+                        );
+                    }
+                },
+                error: function (request, status, error) {
+                    alert(request.responseText);
+                }
+            });
+            $('#EditUser').modal('hide');
+        }
+
+        function ShowModalEditUser(userId, name) {
+            $('#Edit_UserId').val(userId);
+            $('#Edit_Name').val(name);
+            $('#EditUser').modal('show');
+        }
+    </script>
+
+}
+
+
+@section Modals
+{
+    <!-- Modal Edit User -->
+    <div class="modal fade" id="EditUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">ویرایش کاربر</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-xl-12 col-lg-12 col-md-12 mb-1">
+                        <fieldset class="form-group">
+                            <input type="hidden" id="Edit_UserId" />
+                            <label for="basicInput">نام و نام خانوادگی</label>
+                            <input type="text" class="form-control" id="Edit_Name">
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-secondary" data-dismiss="modal">بستن</a>
+                    <a class="btn btn-primary" onclick="Edituser()">اعمال تغییرات</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}

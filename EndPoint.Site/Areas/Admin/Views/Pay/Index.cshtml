@@ -1,0 +1,76 @@
+﻿@addTagHelper *, LazZiya.TagHelpers
+@using OnlineShop.Application.Services.Finances.Queries.GetPayForAdmin
+@model PagingResultGetPayDto
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+
+                <a href="~/admin/users/adduser" class="btn btn-block bg-gradient-success" style="width: 150px; height:50px"> Add User</a>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+
+                            <th>Number Of Pay</th>
+                            <th>Amount</th>
+                            <th>UserName</th>
+                            <th>IsPay</th>
+                            <th>PayDate</th>
+                            <th>RefId</th>
+                            <th>Authority</th>
+                            <th style="width: 120px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Pays)
+                        {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.Amount.ToString("n0")</td>
+                            <td>@item.UserName</td>
+                            <td>@item.IsPay</td>
+                            <td>@item.PayDate</td>
+                            <td>@item.RefId</td>
+                            <td>@item.Authority</td>
+                            <td>
+                            </td>
+
+
+                        </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer clearfix">
+                <paging total-records="Model.RowCount"
+                        page-no="Model.Page"
+                        page-size="Model.PageSize"
+                        show-prev-next="true"
+                        show-total-pages="false"
+                        show-total-records="false"
+                        show-page-size-nav="true"
+                        show-first-numbered-page="true"
+                        show-last-numbered-page="true"
+                        query-string-key-page-no="Page"
+                        query-string-key-page-size="PageSize"
+                        gap-size="2">
+                </paging>
+            </div>
+        </div>
+        <!-- /.card -->
+        <!-- /.card -->
+    </div>
+    <!-- /.col -->
+    <!-- /.col -->
+</div>
+

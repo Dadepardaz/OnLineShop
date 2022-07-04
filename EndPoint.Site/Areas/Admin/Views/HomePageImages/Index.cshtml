@@ -1,0 +1,45 @@
+﻿@model List<OnlineShop.Application.Services.HomePage.ImagesInIndex.ResulttHomePageImageDto>
+    @{
+        ViewData["Title"] = "Index";
+        Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+
+                <a href="~/admin/HomePageImages/add" class="btn btn-block bg-gradient-success" style="width: 150px; height:50px"> Add ImageHome</a>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+
+                            <th>Link</th>
+
+                            <th style="width: 120px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Link</td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+
+        </div>
+        <!-- /.card -->
+        <!-- /.card -->
+    </div>
+    <!-- /.col -->
+    <!-- /.col -->
+</div>
+

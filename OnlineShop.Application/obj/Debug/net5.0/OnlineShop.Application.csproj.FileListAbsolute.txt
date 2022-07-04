@@ -1,0 +1,17 @@
+D:\AspExample\OnlineShopEnglish\OnlineShop.Application\bin\Debug\net5.0\OnlineShop.Application.deps.json
+D:\AspExample\OnlineShopEnglish\OnlineShop.Application\bin\Debug\net5.0\OnlineShop.Application.dll
+D:\AspExample\OnlineShopEnglish\OnlineShop.Application\bin\Debug\net5.0\ref\OnlineShop.Application.dll
+D:\AspExample\OnlineShopEnglish\OnlineShop.Application\bin\Debug\net5.0\OnlineShop.Application.pdb
+D:\AspExample\OnlineShopEnglish\OnlineShop.Application\bin\Debug\net5.0\OnlineShop.Common.dll
+D:\AspExample\OnlineShopEnglish\OnlineShop.Application\bin\Debug\net5.0\OnlineShop.Domain.dll
+D:\AspExample\OnlineShopEnglish\OnlineShop.Application\bin\Debug\net5.0\OnlineShop.Common.pdb
+D:\AspExample\OnlineShopEnglish\OnlineShop.Application\bin\Debug\net5.0\OnlineShop.Domain.pdb
+D:\AspExample\OnlineShopEnglish\OnlineShop.Application\obj\Debug\net5.0\OnlineShop.Application.csproj.AssemblyReference.cache
+D:\AspExample\OnlineShopEnglish\OnlineShop.Application\obj\Debug\net5.0\OnlineShop.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\AspExample\OnlineShopEnglish\OnlineShop.Application\obj\Debug\net5.0\OnlineShop.Application.AssemblyInfoInputs.cache
+D:\AspExample\OnlineShopEnglish\OnlineShop.Application\obj\Debug\net5.0\OnlineShop.Application.AssemblyInfo.cs
+D:\AspExample\OnlineShopEnglish\OnlineShop.Application\obj\Debug\net5.0\OnlineShop.Application.csproj.CoreCompileInputs.cache
+D:\AspExample\OnlineShopEnglish\OnlineShop.Application\obj\Debug\net5.0\OnlineShop.Application.csproj.CopyComplete
+D:\AspExample\OnlineShopEnglish\OnlineShop.Application\obj\Debug\net5.0\OnlineShop.Application.dll
+D:\AspExample\OnlineShopEnglish\OnlineShop.Application\obj\Debug\net5.0\ref\OnlineShop.Application.dll
+D:\AspExample\OnlineShopEnglish\OnlineShop.Application\obj\Debug\net5.0\OnlineShop.Application.pdb

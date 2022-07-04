@@ -1,0 +1,132 @@
+﻿@addTagHelper *, LazZiya.TagHelpers
+@using OnlineShop.Application.Services.Sliders.Queries.GetSlider
+@model ResultGetSliderDto
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+
+                <a href="~/admin/sliders/AddSlider" class="btn btn-block bg-gradient-success" style="width: 150px; height:50px"> Add Slider</a>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+
+                            <th>Link</th>
+
+                            <th style="width: 120px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Sliders)
+                        {
+                            <tr>
+                                <td>@item.Link</td>
+
+                                <td>
+                                    <button class="btn btn-primary" onclick="ShowModalEditSlider('@item.Id', '@item.Link')">Edit</button>
+                                    <a href="~/admin/sliders/detail/@item.Id" class="btn btn-block bg-gradient-info">Details</a>
+
+                                    <button onclick="Delete('@item.Id')" type="button" class="btn btn-block bg-gradient-danger">Delete</button>
+
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer clearfix">
+                <paging total-records="Model.RowCount"
+                        page-no="Model.Page"
+                        page-size="Model.PageSize"
+                        show-prev-next="true"
+                        show-total-pages="false"
+                        show-total-records="false"
+                        show-page-size-nav="true"
+                        show-first-numbered-page="true"
+                        show-last-numbered-page="true"
+                        query-string-key-page-no="Page"
+                        query-string-key-page-size="PageSize"
+                        gap-size="2">
+                </paging>
+            </div>
+        </div>
+        <!-- /.card -->
+        <!-- /.card -->
+    </div>
+    <!-- /.col -->
+    <!-- /.col -->
+</div>
+
+@section Scripts{
+
+    <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <script src="~/Sweetalert2/sweetalert2.min.js"></script>
+    <script>
+        function Delete(sliderId)
+        {
+            swal.fire(
+                {
+                    title: 'Delete',
+                    text: "Are you Sure",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#7cacbe',
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No'
+                }
+            ).then((result) =>
+            {
+                if (result.value) {
+                    var postData = {
+                        'sliderId': sliderId
+                    };
+                    $.ajax({
+                        contentType: 'application/x-www-form-urlencoded',
+                        dataType: 'json',
+                        type: "POST",
+                        url: "Delete",
+                        data: postData,
+                        success: function (data) {
+                            if (data.isSuccess == true) {
+                                swal.fire(
+                                    'success',
+                                    data.message,
+                                    'success'
+                                ).then(function (isConfirm) {
+                                    location.reload();
+                                });
+                            }
+                            else {
+                                swal.fire(
+                                    'warning',
+                                    data.message,
+                                    'warning'
+                                );
+                            }
+                        },
+                        error: function (request, status, error) {
+                            swal.fire(
+                                'warning',
+                                request.responseText,
+                                'warning'
+                            );
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+
+}
