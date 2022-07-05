@@ -11,23 +11,28 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{56F803E5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{26F0CFC0-6E2D-4E9F-8707-C9016ED7DB78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineShop.Common", "OnlineShop.Common\OnlineShop.Common.csproj", "{8D3F7AF2-50A7-451C-B612-C7DB1C32C527}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineShop.Common", "OnlineShop.Common\OnlineShop.Common.csproj", "{8D3F7AF2-50A7-451C-B612-C7DB1C32C527}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{973A7C62-CA28-4D1E-B50D-1C7AA126CFE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineShop.Application", "OnlineShop.Application\OnlineShop.Application.csproj", "{2B071D18-D7ED-4007-99A6-FF179E673D8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineShop.Application", "OnlineShop.Application\OnlineShop.Application.csproj", "{2B071D18-D7ED-4007-99A6-FF179E673D8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineShop.Domain", "OnlineShop.Domain\OnlineShop.Domain.csproj", "{4ECC571B-3F9A-4956-8288-B3E0754B1F10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineShop.Domain", "OnlineShop.Domain\OnlineShop.Domain.csproj", "{4ECC571B-3F9A-4956-8288-B3E0754B1F10}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{0561A8CB-E426-4C77-AE93-1698266A2AF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineShop.Infrastructure", "OnlineShop.Infrastructure\OnlineShop.Infrastructure.csproj", "{DA437830-AC67-4DE6-9EA7-666187398C22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineShop.Infrastructure", "OnlineShop.Infrastructure\OnlineShop.Infrastructure.csproj", "{DA437830-AC67-4DE6-9EA7-666187398C22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineShop.Persistence", "OnlineShop.Persistence\OnlineShop.Persistence.csproj", "{B92DD6A3-1D7F-49DE-B51C-1222A41EB554}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineShop.Persistence", "OnlineShop.Persistence\OnlineShop.Persistence.csproj", "{B92DD6A3-1D7F-49DE-B51C-1222A41EB554}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Persentation", "Persentation", "{B7A94E0D-DA80-4F03-86E2-EE09176275FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EndPoint.Site", "EndPoint.Site\EndPoint.Site.csproj", "{048D34BC-FF54-4591-8919-38D6C8A97EDB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EndPoint.Site", "EndPoint.Site\EndPoint.Site.csproj", "{048D34BC-FF54-4591-8919-38D6C8A97EDB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6B23BA11-70B5-4689-973E-1D6B1ED9FC3C}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
